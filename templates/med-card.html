@@ -1,0 +1,52 @@
+{%load static%}
+<div class="modal modal-fill fade" data-backdrop="false" id="modal-fill" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Medicine Reminder!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{daily_pres.last.prescription.message}}</p>
+                <div class="prescription box">
+                    <div class="box-body">
+                        <h5 class="">{{daily_pres.last.medicine_date}}</h5>
+                        <span class="badge badge-secondary">
+                            <ion-icon name="time" style="margin-bottom: -1px; margin-right: 2px;"></ion-icon>
+                            {{daily_pres.last.prescription.send_on}}
+                        </span>
+                        <span
+                            class="badge {{daily_pres.last.prescription.med_class}}">{{daily_pres.last.prescription.med_time}}</span>
+                        {%for medicine in daily_pres.last.prescription.medicines.all%}
+                        <div class="">
+                            <div class="row">
+                                <div class="col1">
+                                    {%if medicine.medicine_type == "TABLET"%}
+                                    <img src="{%static 'media/img/tablet.png'%}" alt="">
+                                    {%elif medicine.medicine_type == "PILLS"%}
+                                    <img src="{%static 'media/img/pills.png'%}" alt="">
+                                    {%elif medicine.medicine_type == "SYRUP"%}
+                                    <img src="{%static 'media/img/syrup.png'%}" alt="">
+                                    {%elif medicine.medicine_type == "SYRINGE"%}
+                                    <img src="{%static 'media/img/syringe.png'%}" alt="">
+                                    {%endif%}
+                                </div>
+                                <div class="col dets">
+                                    <h3>{{medicine.medicine_name}}</h3>
+                                    <p class="meds">{{medicine.med_unit}}</p>
+                                    <p>{{daily_pres.last.prescription.med_time}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+                <br><br><br><br><br><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

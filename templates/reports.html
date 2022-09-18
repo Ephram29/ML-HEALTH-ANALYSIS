@@ -1,0 +1,180 @@
+{%extends 'dash-theme.html'%}
+{%load static%}
+{%block details%}
+
+<style>
+    .content-wrapper{
+        margin-left: 10rem;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="container-full">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="d-flex align-items-center">
+                <div class="me-auto">
+                    <h4 class="page-title">Lab Reports</h4>
+                    <div class="d-inline-block align-items-center">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Lab Reports</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <h4 class="box-title">Checkup List</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="bb-2">No.</th>
+                                            <th class="bb-2">Test</th>
+                                            <th class="bb-2">Date</th>
+                                            
+
+                                            <th class="bb-2">checkup user</th>
+                                            
+                                            <th class="bb-2">Status</th>
+                                            <th class="bb-2">Result</th>
+                                            <th class="bb-2">Verified</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--for here-->
+                                        <tr>
+                                            {%for checkup in checkups%}
+                
+
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{checkup.checkup_type}}</td>
+                                            <td>{{checkup.checkup_date}}</td>
+            
+                                            <td>{{checkup.checkup_id}}</td>
+                                            
+                                            <td><span class="badge badge-success">Result Added</span></td>
+                                            <td>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#{{checkup.checkup_id}}"
+                                                    class="text-info">Result </a>
+
+                                            </td>
+                                            
+                                            <td style="  text-align: center;">
+                                                {%if checkup.is_verified%}
+                                                <img src="{%static 'media/img/check.png'%}" width="20px" alt="">
+                                                {%else%}
+                                                <img src="{%static 'media/img/remove.png'%}" width="20px" alt="">
+                                                {%endif%}
+                                            </td>
+                                            
+                                        </tr>
+                                        {%endfor%}
+     
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<!-- /.content-wrapper -->
+{%for checkup in checkups%}
+<!--Model Popup Area-->
+<!-- result modal content -->
+<div class="modal fade" id="{{checkup.checkup_id}}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="result-popup">Checkup - Results</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-between">
+                    <div class="col-md-7 col-12">
+                        <h4>Test Name - {{checkup.get_checkup_type}}</h4>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <h4 class="text-end">Checkup Id : {{checkup.checkup_id}}</h4>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="bg-secondary">
+                            <tr>
+                                <th scope="col">Parameter</th>
+                                <th scope="col">Result</th>
+                                <th scope="col">Range</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for key,val in checkup.get_checkup_details.items%}
+                            {%if key == 'result' or key == 'results'%}
+                            <tr>
+                                <th>{{key}}</th>
+                                <th>{{val}}</th>
+                            </tr>
+                            {%else%}
+                            <tr>
+                                <td>{{key}}</td>
+                                <td>{{val}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            {%endif%}
+                            {%endfor%}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="comment">
+                    <p><span class="fw-600">Remarks</span> : <span class="comment-here text-mute">Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. </span></p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th colspan="2" class="b-0">Test By</th>
+                                <th colspan="2" class="b-0">Signed By</th>
+                            </tr>
+                            <tr class="bg-secondary">
+                                <td>{{checkup.checkup_user}}</td>
+                                <td>{{checkup.checkup_date}}</td>
+                                <td>{{checkup.verified_by}}</td>
+                                <td>{{checkup.current}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-right" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info pull-right">Print</button>
+                <button type="button" class="btn btn-success pull-right" onclick="location.href='{{checkup.get_checkup_link}}';">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+{%endfor%}
+{%endblock%}

@@ -6,6 +6,7 @@ const suggBox = searchWrapper.querySelector(".autocom-box");
 const icon = searchWrapper.querySelector(".icon");
 let linkTag = show.querySelector("a");
 let frame=show.querySelector(".frame");
+const add= document.querySelector(".add");
 let webLink;
 
 // if user press any key and release
@@ -59,3 +60,7 @@ function showSuggestions(list) {
     }
     suggBox.innerHTML = listData;
 }
+add.addEventListener('click',()=>{
+    const inp = document.querySelector('.chatbox__footer input');
+    inp.value=inputBox.value;
+});

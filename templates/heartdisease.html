@@ -1,0 +1,187 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="{%static 'styles/drop.css'%}">
+    <!--Stylesheet-->
+    <style>
+        .spacer{
+        margin-top: 150px;
+    }
+    .image img{
+        width: 80%;
+        margin: 63px 15% auto;
+    }
+    .row>* {
+        width: 50% !important;
+    }
+    p{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 16px;
+    }
+    .results{
+    height: 200px;
+    background-color: white;
+    margin-top: 50px !important;
+    border-radius: 20px;
+}
+.results h5{
+    color: #0A19FE;
+    padding: 10px 10px;
+}
+.results h2{
+    padding: 0px 10px;
+}
+.add-btn{
+    margin:10px 20px;
+}
+.add{
+    position: relative;
+    left:87%;
+    border: 0;
+    background-color: #0A19FE;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+.results p{
+    color: #514d4d;
+    margin-top: 10px;
+    font-size: 20px;
+    padding: 0px 10px;
+}
+    </style>
+</head>
+<body>
+    {%include 'navbar.html'%}
+    
+    <div class="spacer"></div>
+    <div class="row">
+        <div class="image">
+            <img src="{%static 'media/img/heart-dis.png'%}" alt="">
+        </div>
+        <div class="container2">
+            <form action="" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <figure class="image-container">
+                    <img id="chosen-image">
+                    <figcaption id="file-name"></figcaption>
+                </figure>
+                <input type="file" name="ecg" id="upload-button" accept="image/*">
+        
+        
+                <div class="row results">
+                    <div class="col">
+                        <label for="upload-button">
+                            <i class="fas fa-upload"></i> &nbsp; Choose A Photo
+                        </label>
+                    </div>
+                    <div class="col"><input type="submit" id="sub"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Here-->
+</div>
+{%if prediction%}
+<div class="container">
+    <div class="results" id="result">
+        <h5>Checkup Report</h5>
+        {% if prediction %}
+        <h1>{{ prediction}}</h1>
+        {%endif%}
+
+
+        <p>We have mailed you the checkup report to your registered email Id.</p>
+        <div class="add-btn"><button class="add">Go to Report</button></div>
+    </div>
+</div>
+{%endif%}
+
+    <!--end here-->
+    <div class="container">
+        <h1>Everything You Need to Know About Heart Disease</h1>
+    
+        <p>Heart disease describes a range of conditions that affect your heart. Diseases under the heart disease
+            umbrella include blood vessel diseases, such as coronary artery disease; heart rhythm problems
+            (arrhythmias); and heart defects you're born with (congenital heart defects), among others.<br>
+            Cardiovascular disease generally refers to conditions that involve narrowed or blocked blood vessels that
+            can lead to a heart attack, chest pain (angina) or stroke. Other heart conditions, such as those that affect
+            your heart's muscle, valves or rhythm, also are considered forms of heart disease.
+            Many forms of heart disease can be prevented or treated with healthy lifestyle choices.</p>
+    
+        <h4> ECG - electrocardiogram</h4>
+        <p>An electrocardiogram (ECG) is a simple test that can be used to check your heart's rhythm and electrical
+            activity.An ECG is often used alongside other tests to help diagnose and monitor conditions affecting the heart.
+    
+            It can be used to investigate symptoms of a possible heart problem, such as chest pain, palpitations (suddenly
+            noticeable heartbeats), dizziness and shortness of breath. </p>
+        <p> <b>Here, we have used 4 categories for image classification for our ECG images. Normal Myocardial infarction
+            Abnormal Heart beat History of Myocardial infarction </b>
+        </p>
+        <p>
+        <h4>Normal</h4>
+        <p>Heart is beating in a regular sinus rhythm between 60 - 100 beats per
+            minute (specifically 82 bpm).</p>
+        <h4>Myocardial infarction</h4>
+        <p>Commonly known as a heart attack, occurs when blood flow
+            decreases or stops in the artery of the heart, causing damage to the heart
+            muscle. The most common symptom is chest pain or discomfort, which may travel
+            into the shoulder, arm, back, neck or jaw. Often it occurs in the center or left side of
+            the chest and lasts for more than a few minutes</p>
+        <p> overall heart rate in patients sustaining myocardial infarction is higher (mean 78.5 beats/min) than that (69.5
+            beats/min) in matched control individuals</p>
+        <h4>Abnormal Heartbeat</h4>
+        <p>
+    
+            A heart arrhythmia is an irregular heartbeat. Heart rhythm problems (heart arrhythmias) occur when the
+            electrical signals that coordinate the heart's beats don't work properly. The faulty signaling causes the heart
+            to beat too fast, too slow or irregularly.The heartbeat rate can be greater than 100 or less than 60 here.
+    
+        </p>
+        <h4>History of Myocardial infarction</h4>
+        <p>A heart attack (medically known as a myocardial infarction) is a deadly medical emergency where your heart muscle
+            begins
+            to die because it isn’t getting enough blood flow and this has happened to you before. This is usually caused by
+            a blockage in the arteries that supply blood to your heart. If blood flow isn’t restored quickly. A person who
+            has previously encountered it will be visible in the ECG scan reports</p>
+        <h4>Symptoms</h4>
+        <p>
+        <ul>
+            <li>
+                Chest pain, chest tightness, chest pressure and chest discomfort (angina)
+            </li>
+            <li>Shortness of breath</li>
+            <li>Pain, numbness, weakness or coldness in your legs or arms if the blood vessels in those parts of your
+                body are narrowed</li>
+            <li>Pain in the neck, jaw, throat, upper abdomen or back</li>
+            <li> Chest pain or discomfort</li>
+            <li> Dizziness</li>
+            <li>Fainting (syncope) or near fainting</li>
+            <li> Fluttering in the chest</li>
+            <li>Lightheadedness</li>
+            <li> Racing heartbeat (tachycardia)</li>
+            <li>Shortness of breath</li>
+            <li>Slow heartbeat (bradycardia)
+            </li>
+    
+    
+    
+        </ul>
+        </p>
+    
+        <br>
+        <hr>
+        <br>
+    </div>
+    <!--Script-->
+    <script src="{%static 'js/drop.js'%}"></script>
+   
+    
+</body>
+</html>

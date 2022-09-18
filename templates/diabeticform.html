@@ -1,76 +1,376 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
     <title>DITECT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-    body {
-    font-family: Arial, Helvetica, sans-serif;
-    }
+        body {
+            /*font-family: Arial, Helvetica, sans-serif;*/
+            background: #f5fbff !important;
+        }
 
-   
-    input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    }
-    .registerbtn {
-    background-color: #e48912;
+
+        input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .registerbtn {
+            background-color: #6191FF;
+            color: black;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 1;
+        }
+
+        .registerbtn:hover {
+            opacity: 1;
+        }
+
+        p {
+            color: #0A19FE;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .column p {
+            padding: 0;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+
+        input[type=submit]:hover {
+            background-color: #0A19FE;
+            color: white;
+        }
+
+        .center {
+            margin: auto;
+            width: 60%;
+            border: 3px solid #ff9101c5;
+            padding: 10px;
+        }
+
+        #form1,
+        #form2 {
+            width: 500px;
+            background: white;
+            padding: 10px 50px;
+            margin: auto;
+            /* */
+            font-size: 16px;
+            border-radius: 10px;
+        }
+
+        .fields {
+            padding-top: 15px;
+        }
+
+        #form2 {
+            display: none;
+            opacity: 0;
+            transition: display 3s linear;
+        }
+
+        .spacer {
+            margin-top: 150px;
+        }
+
+        .image img {
+            width: 80%;
+            margin: 63px 15% auto;
+        }
+
+        .row>* {
+            width: 50% !important;
+        }
+
+        .column {
+            position: relative;
+        }
+
+        .unit {
+            position: absolute;
+            display: block;
+            right: 5px;
+            width: 50px;
+
+            top: 20px;
+            z-index: 9;
+            text-align: left;
+        }
+
+        .content p {
+            color: black;
+        }
+        .results{
+    height: 200px;
+    background-color: white;
+    margin-top: 50px !important;
+    border-radius: 20px;
+}
+.results h5{
+    color: #0A19FE;
+    padding: 10px 10px;
+}
+.results h2{
+    padding: 0px 10px;
+}
+.add-btn{
+    margin:10px 20px;
+}
+.add{
+    position: relative;
+    left:87%;
+    border: 0;
+    background-color: #0A19FE;
     color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-    }
-
-    .registerbtn:hover {
-    opacity:1;
-    }
-    p{
-        color: rgb(58, 139, 11);
-        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
-
-
-    input[type=submit]:hover {
-    background-color: #17cce4;
-    }
-    .center {
-    margin: auto;
-    width: 60%;
-    border: 3px solid #ff9101c5;
-    padding: 10px;
-    }
-
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+.results p{
+    color: #514d4d;
+    margin-top: 10px;
+    font-size: 20px;
+    padding: 0px 10px;
+}
     </style>
-    </head>
-    <body>
-    
-    
-    <h2> <p style="text-align:center;">Diabetes Prediction</p></h2>
-    <form action="{%url 'predicteddiabetes'%}" method="post">
-        {%csrf_token%}
-   <!-- <input type="text" name="Pregnancies" placeholder="Pregnancies" required="required" /> -->
-    <input type="text" name="Glucose Level" placeholder="Glucose Level" required="required" />
-    <!--  <input type="text" name="Blood Pressure" placeholder="Blood Pressure" required="required" />
-    <input type="text" name="Skin Thickness" placeholder="Skin Thickness" required="required" />-->
-    <input type="text" name="Insulin" placeholder="Insulin" required="required" />
-    <input type="text" name="BMI" placeholder="BMI" required="required" />
-    <input type="text" name="Diabetes PF" placeholder="Diabetes PF" required="required" />
-    <input type="text" name="Age" placeholder="Age" required="required" />
-    <input type="submit" class="registerbtn">Predict</input>
+</head>
 
-    </form>
+<body>
+    {%include 'navbar.html'%}
+    <div class="spacer"></div>
+
+
+    <div class="row">
+        <div class="image">
+            <img src="{%static 'media/img/diabetes.png'%}" alt="">
+        </div>
+
+        <div class="forms">
+            <h2>
+                <p style="text-align:center;">Diabetes Prediction</p>
+            </h2>
+            <div id="form1">
+                <form id="ped_form" name="pedigree_form">
+                    <div class="fields">
+                        <label for="grandparents_father">Is any of your Grand Parents(Father's Parents)
+                            Diabetic?</label>
+                        <select name="grandparents_father" id="">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="fields">
+                        <label for="father_diabetic">Is your Father diabetic?</label>
+                        <select name="father_diabetic" id="">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="fields">
+                        <label for="grandparents_mother">Is any of your Grand Parents(Mother's Parents)
+                            Diabetic?</label>
+                        <select name="grandparents_mother" id="">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="fields">
+                        <label for="mother_diabetic">Is your Mother diabetic?</label>
+                        <select name="mother_diabetic" id="">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="fields">
+                        <label for="siblings">Is your brother/Sister diabetic?</label>
+                        <select name="siblings" id="">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <input type="submit" class="registerbtn" value="Get pedigree">
+                </form>
+            </div>
+            <div id="form2">
+                <form action="{%url 'predicteddiabetes'%}" method="post" name="diabetic_form">
+                    {%csrf_token%}
+                    <div class="column">
+                        <input type="text" name="Glucose Level" placeholder="Glucose Level" required="required" />
+                        <span class="unit">mg/dL</span>
+                    </div>
+
+                    <div class="column">
+                        <input type="text" name="Insulin" placeholder="Insulin" required="required" />
+                        <span class="unit">IU/ml</span>
+                    </div>
+                    <div class="column">
+                        <input type="text" name="BMI" placeholder="BMI" required="required" />
+                        <span class="unit">kg/m <sup>2</sup></span>
+                    </div>
+                    <div class="column">
+                        <input type="text" name="Diabetes_PF" placeholder="Diabetes PF" required="required" readonly />
+                        <span class="unit">PF</span>
+                        <p><b>Pedigree Function</b> is a probabilistic value of the risk of
+                            having diabetes calculated based on genetic information provided. <a href="#"
+                                id="learn">Learn more &#8250;</a></p>
+                    </div>
+                    <div class="column"><input type="text" name="Age" placeholder="Age" required="required"
+                            value="{{age}}" readonly />
+                        <span class="unit">Age</span>
+                    </div>
+                    <input type="submit" class="registerbtn" value="PREDICT">
+                </form>
+            </div>
+        </div>
+    </div>
+    {%if prediction == 1 or prediction == 0 %}
+    <div class="container">
+        <div class="results" id="result">
+            <h5>Checkup Report</h5>
+            {% if prediction == 1 %}
+            <h2>Your chances of having diabets is high,Take care of your health .</h2>
+            {% elif prediction == 0 %}
+            <h2>No Worries!!! You don't have Diabetes.</h2>
+            {% endif %}
+            <p>We have mailed you the checkup report to your registered email Id.</p>
+            <div class="add-btn"><button class="add">Go to Report</button></div>
+        </div>
+    </div>
+    {%endif%}
+    <div class="container" style="margin-top: 55px;">
+        <div class="content">
+            <h1>Everything You Need to Know About Diabetes</h1>
+            
+            <p>Diabetes is a disease that occurs when your blood glucose, also called blood sugar, is too high. Blood
+                glucose is your main source of energy and comes from the food you eat. Insulin, a hormone made by the
+                pancreas, helps glucose from food get into your cells to be used for energy. With diabetes, your body
+                either doesn't make enough insulin or can't effectively use the insulin it does make.
+                Symptoms include increased thirst, frequent urination, hunger, fatigue,Weight loss without trying and
+                blurred vision.</p>
+            <h3>Type 1 Diabetes</h3>
+            <p>A chronic condition in which the pancreas produces little or no insulin.
+                It typically appears in adolescence.Different factors, such as genetics and some viruses,
+                may cause type 1 diabetes. Although type 1 diabetes usually
+                appears during childhood or adolescence, it can develop in adults.</p>
+            <p>For type 1 diabetes the normal blood glucose sugar levels are
+                
+                    <h5>INSULIN LEVEL</h5> <br>
+                   <b> 4-7 mmol/L= 72-126 mg/dl <br>
+                    Under 9 mmol/L= 162 mg/dl <br> </b>
+                    <br> 
+                    <h5>BLOOD SUGAR LEVEL</h5> <br>
+                    <ul>
+                        <li> Fasting blood glucose level -- Diabetes is diagnosed if it is<b> 126 mg/dL (7 mmol/L)</b> or
+                            higher two different times.
+
+                        <li>Random (non-fasting) blood glucose level -- You may have diabetes if it is<b> 200 mg/dL (11.1
+                            mmol/L)</b> or higher, and you have symptoms such as increased thirst, urination, and fatigue.
+                            (This must be confirmed with a fasting test.) </li>
+                        <li>Oral glucose tolerance test -- Diabetes is diagnosed if the glucose level is <b>200 mg/dL (11.1
+                            mmol/L) </b> or higher 2 hours after you drink a special sugar drink.</li>
+                        <li> Hemoglobin A1C (A1C) test -- Diabetes is diagnosed if the result of the test is <b> 6.5% or
+                            higher. </b></li>
+
+
+
+
+                    </ul>
+                
+
+            </p>
+            <br> <br>
+
+            <h3>Type 2 Diabetes</h3>
+            <p>Type 2 diabetes is a disease that keeps your body from using insulin the way it should.
+                With type 2 diabetes, the body either doesn't produce enough insulin, or it resists insulin.
+                It’s the most common type—about 90% to 95% Trusted Source of people living with diabetes have type 2.
+            </p>
+            <p>For type 2 diabetes the normal blood glucose sugar levels are
+    
+                    <h5>INSULIN LEVEL</h5> <br>
+                    <b> 4-7 mmol/L= 72-126 mg/dl <br> 
+                    Under 8.5 mmol/L= 162 mg/dl <br> </b> 
+
+                    <br> 
+                      <br> <h5>BLOOD SUGAR LEVEL</h5>
+                    <ul>
+                        <li> Fasting blood glucose level -- Diabetes is diagnosed if it is <b> 126 mg/dL (7 mmol/L) </b> or
+                            higher two different times.
+
+                        <li>Random (non-fasting) blood glucose level -- a level of <b> 200 mg/dL (11.1 mmol/L)</b> or higher
+                            suggests diabetes, especially if you also have signs and symptoms of diabetes, such as
+                            frequent urination and extreme thirst. </li>
+                        <li>Fasting blood sugar test -- Diabetes is diagnosed if the glucose level is <b> 200 mg/dL (11.1
+                            mmol/L) </b> or higher 2 hours after you drink a special sugar drink.</li>
+                        <ul>
+                            <li> <b>Less than 100 mg/dL (5.6 mmol/L) is normal </b></li>
+                            <li> <b>100 to 125 mg/dL (5.6 to 6.9 mmol/L) is diagnosed as prediabetes.</b></li>
+                            <li><b> 126 mg/dL (7 mmol/L) or higher on two separate tests is diagnosed as diabetes </b></li>
+                        </ul>
+                        <li> Oral glucose tolerance test -- <b>Less than 140 mg/dL (7.8 mmol/L) is normal </b>.</li>
+                        <li><b> 140 to 199 mg/dL (7.8 mmol/L and 11.0 mmol/L) is diagnosed as prediabetes </b>.</li>
+                        <li> <b>200 mg/dL (11.1 mmol/L) or higher after two hours suggests diabetes</b>. </li>
+                    </ul>
+            <p>
+             <br> <h5> BMI LEVEL </h5>
+            <ul>
+                <b>
+
+                <li> BMI of 25-29.9  (overweight)</li>
+                <li> BMI of 30-39.9 (obesity)</li>
+                <li>BMI of 40 or greater(severe obesity) </b></li>
+
+
+            </ul>
+
+            </p>
+
+
+            <p>
+           
+ <br> <h5> DIABETES PEDIGREE FUNCTION</h5>
+            Indicates the function which scores likelihood of diabetes based on family history- RANGE<b> BETWEEN 0 AND 1
+            </b><br>
+
+                    </p>
+                    </p>
+                   <br> <h5>SIGNS YOU MIGHT BE HAVING DIABETES</h5>
+                    </ul>
+
+<li>Urinate (pee) a lot, often at night</li>
+<li>Are very thirsty
+<li>Lose weight without trying
+<li>Are very hungry
+<li> blurry vision
+<li>Have numb or tingling hands or feet
+<li>Feel very tired
+<li>Have very dry skin
+<li>Have sores that heal slowly
+<li>Have more infections than usual
+
+</ul>
+                    <br>
+                    <hr>
+                    <br>
+        </div>
     </div>
 
-    </body>
+    <script src="{%static 'js/pedigree.js'%}"></script>
+
+</body>
+
 </html>
-  

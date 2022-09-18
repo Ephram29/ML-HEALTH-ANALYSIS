@@ -1,0 +1,5 @@
+Django Celery:
+celery -A healthApp.celery worker --pool=solo -l info
+
+Django Celery Beat:
+celery -A healthApp beat -l INFO

@@ -1,3 +1,4 @@
+{% load static%}
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,21 +41,23 @@ input[type=text], select {
 input[type=submit]:hover {
   background-color: #e48912;
 }
-
+.spacer{
+        margin-top: 150px;
+    }
 
 </style>
 </head>
 <body>
-
+{%include 'navbar.html'%}
+<div class="spacer"></div>
   
   <h2>Results: </h2>
 {% if prediction == 1 %}
-<h2 style="color: rgb(189, 16, 16);">Chances of having Diabetes is more, please consult a Doctor.</h2>
-<p style="text-align:center;"><img src="https://img.collegedekhocdn.com/media/img/careers/doctor-clinic.jpg" alt="HTML" width="350" height="250"></p>
+<h2 style="color: rgb(0,0,205);">Your chances of having diabets is high,Take care of your health .</h2>
+<p style="text-align:center;"><img src="{% static 'media/img/diabetes1.jpg'%}" alt="HTML" width="350" height="250"></p>
 {% elif prediction == 0 %}
-<h2 style="color: rgb(25, 197, 25);">No Worries!!! You don't have Diabetes.</h2>
-<p style="text-align: center;"></p><img src="https://www.becomingminimalist.com/wp-
-content/uploads/2019/09/how-to-be-happy.jpg" alt="HTML" width="350" height="250"></p>
+<h2 style="color: rgb(0,0,205);">No Worries!!! You don't have Diabetes.</h2>
+<p style="text-align: center;"><img src="{% static 'media/img/diabetes2.jpg'%}" alt="HTML" width="350" height="250" style="margin:auto"></p>
 {% endif %}
 
 

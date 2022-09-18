@@ -1,0 +1,119 @@
+{%load static%}
+<link rel="stylesheet" href="{%static 'styles/notifications.css'%}">
+<nav>
+
+    <i class="material-icons dp48 left">menu</i>
+
+    <spacer></spacer>
+
+    <div class="notification-icon right">
+        <i class="material-icons dp48">email</i>
+        <span class="num-count">5</span>
+    </div>
+
+    <div class="notification-icon right">
+        <i class="material-icons dp48">notifications</i>
+        <span class="num-count" id="noti-count">0</span>
+    </div>
+
+    <div class="profile">
+        <span class="user-photo"></span>
+        <span class="first-name right">Kate Kim</span>
+    </div>
+
+</nav>
+
+<main>
+
+    <div class="notification-container" id="noti-container">
+        <h3>Notifications
+            <i class="material-icons dp48 right">settings</i>
+        </h3>
+
+
+
+    </div>
+
+    <!-- -->
+
+    <div class="profile-container">
+
+        <a class="right"><i class="material-icons dp48 right">settings</i></a>
+
+        <span class="user-photo left"></span>
+
+        <h1 class="user-name"><a>Kate Kim</a></h1>
+        <span class="user-email">ahdjdhajdjnfej@gmail.com</span>
+
+        <div class="switch">
+            <input id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox">
+            <label for="language-toggle"></label>
+
+            <span class="on">EN</span>
+            <span class="off">FR</span>
+
+        </div>
+
+        <hr />
+        <button class="button secondary-button left">Switch User</button>
+        <button class="button primary-button right">Sign Out</button>
+
+    </div>
+
+    <!-- -->
+
+    <ul class="menu">
+        <li><i class="material-icons dp48 gray left">dashboard</i> News Feed</li>
+        <li><i class="material-icons dp48 gray left">home</i> Properties</li>
+
+        <li class="dropdown active"><i class="material-icons dp48 teal left">supervisor_account</i> Client Relations <i
+                class="material-icons dp48">expand_more</i></li>
+        <ul class="active">
+            <li class="active">Tasks & Activities <span class="num-count gray-bg">13</span></li>
+            <li>Contacts</li>
+            <li>Marketing</li>
+            <li>Action Plans</li>
+            <li>Calendar</li>
+            <li>Guest Accounts</li>
+        </ul>
+
+        <li class="dropdown"><i class="material-icons dp48 gray left">timeline</i> Reporting <i
+                class="material-icons dp48">expand_more</i></li>
+        <li class="dropdown"><i class="material-icons dp48 gray left">face</i> Users <i
+                class="material-icons dp48">expand_more</i></li>
+    </ul>
+
+    <div class="content"></div>
+    {{ patient_id|json_script:"room-name" }}
+    <script>
+        const patient_id= JSON.parse(document.getElementById('room-name').textContent);
+        const notificationSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/patient-dashboard/'
+            + patient_id
+            + '/'
+        );
+
+        notificationSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            console.log(data);
+            document.getElementById('noti-container').innerHTML += '<input class="checkbox" type="checkbox" id="size_1" value="small" checked />' + '<label class="notification new" for= "size_1"> <em>1</em>' + data["message"] + '<i class="material-icons dp48 right" >clear</i></label>';
+            document.getElementById('noti-count').innerHTML = parseInt(document.getElementById('noti-count').innerHTML) + 1
+            //document.querySelector('#notification-log').value += (data.message + '\n');
+        };
+
+        notificationSocket.onclose = function (e) {
+            console.error('notification socket closed unexpectedly');
+        };
+
+        document.querySelector('#notification-message-input').focus();
+        document.querySelector('#notification-message-input').onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#notification-message-submit').click();
+            }
+        };
+
+
+    </script>
+</main>

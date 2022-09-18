@@ -3,30 +3,49 @@
 {% load static %}
 
 {%block bot%}
-<div class="container">
-    <div class="chatbox">
-        <div class="chatbox__support">
-            <div class="chatbox__header">
-                <div class="chatbox__image--header">
-                    <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
-                </div>
-                <div class="chatbox__content--header">
-                    <h4 class="chatbox__heading--header">Chat support</h4>
-                    <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
-                </div>
-            </div>
-            <div class="chatbox__messages">
-                
-                <div class=""></div>
-            </div>
-            <div class="chatbox__footer">
-                <input type="text" placeholder="Write a message...">
-                <button class="chatbox__send--footer send__button">Send</button>
-            </div>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="image symp-content symp-content-active">
+            <img src="{%static 'media/img/chatbot.png'%}" alt="">
         </div>
-        <div class="chatbox__button">
-            <button><img src="{% static 'media/chatbox-icon.svg' %}" /></button>
+        
+    </div>
+    <div class="col-md-5">
+        <div class="symp-content symp-content-active">
+            <h1 class="symp-header head">Hi {{patient.patient.first_name}}, Track symptoms and conditions. </h1>
+            <p class="symp-p head">We're always happy to help you find out whats going on. Just start a new symptom assesment and we
+                will provide the possible diseases that maybe affected.</p>
+            <button class="head symp-btn">Chat with Us!</button>
+        </div>
+        <div class="chatbox">
+            <div class="chatbox__support">
+                <div class="chatbox__header">
+                    <div class="chatbox__image--header">
+                        <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+                    </div>
+                    <div class="chatbox__content--header">
+                        <h4 class="chatbox__heading--header">Chat support</h4>
+                        <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+                    </div>
+                </div>
+                <div class="chatbox__messages">
+        
+                    <div class=""></div>
+                </div>
+                <div class="chatbox__footer">
+                    <input type="text" placeholder="Write a message...">
+                    <button class="chatbox__send--footer send__button">Send</button>
+                </div>
+            </div>
+            <div class="chatbox__button">
+                <button><img height="45px" src="{% static 'media/chat.svg' %}" /></button>
+            </div>
         </div>
     </div>
+    <div class="results" id="result">
+        <h5>Checkup Report</h5>
+    </div>
 </div>
+
 {%endblock%}

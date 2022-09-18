@@ -1,0 +1,510 @@
+{%extends 'dash-theme.html'%}
+{%load static%}
+{%block details%}
+<style>
+    a::before{content: '' !important;}
+    .med-icons label::after{
+         background-image:url("{%static 'media/img/checked.png'%}");
+    }
+</style>
+<div class="row">
+    <div class="col-md-8">
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">Recent Checkups</h4>
+            </div>
+            <div class="box-body">
+                <div class="news-slider owl-carousel owl-sl">
+                    
+                    {% for checkup in checkups %}
+                    <div>
+                        <div class="d-flex align-items-center mb-10">
+                            <div class="d-flex flex-column flex-grow-1 fw-500">
+                                <p class="hover-primary text-fade mb-1 fs-14">#{{checkup.checkup_id}}</p>
+                                <span class="text-dark fs-16">{{checkup.get_checkup_type}}</span>
+                                <p class="mb-0 fs-14">{{checkup.checkup_date}}<span class="badge badge-dot badge-primary"></span></p>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <a data-bs-toggle="dropdown" href="#" class="base-font mx-30"><i
+                                            class="ti-more-alt text-muted"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#"><i class="ti-import"></i> Import</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-export"></i> Export</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-printer"></i> Print</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i> Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end py-10">
+                            <div>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#{{checkup.checkup_id}}" class="waves-effect waves-light btn btn-sm btn-primary-light">Details</a>
+                                <a href="#" class="waves-effect waves-light btn btn-sm btn-primary-light">Contact
+                                    Team</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </div>
+        <!--
+            {%if patient.time_exists%}
+        <div class="box">
+            <div class="timeslot">
+                <h3>{{patient.breakfast}}</h3>
+                <h3>{{patient.lunch}}</h3>
+            </div>
+        </div>
+        {%endif%}
+        -->
+        
+        <div class="box times">
+            <div class="timedisplay">
+                <a class="edit"><img src="{%static 'media/img/edit.png'%}" alt=""></a>
+                <div class="timebox row">
+                    <div class="col-md-3"><img src="{%static 'media/img/morning.png'%}" alt="" srcset=""></div>
+                    <div class="col-md-9"><div class="timediv">
+                        <h3>Breakfast Time</h3>
+                        <h4>{{patient.breakfast}}</h4>
+                    </div></div>
+                </div>
+                <div class="timebox row">
+                    <div class="col-md-3">
+                        
+                            <img src="{%static 'media/img/lunch.png'%}" alt="" srcset="">
+                        
+                    </div>
+                    <div class="col-md-9"><div class="timediv">
+                        <h3>Lunch Time</h3>
+                        <h4>{{patient.lunch}}</h4>
+                    </div></div>
+                </div>
+                <div class="timebox row">
+                    <div class="col-md-3">
+                        <img src="{%static 'media/img/night-mode.png'%}" alt="" srcset="">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="timediv">
+                            <h3>Dinner Time</h3>
+                            <h4>{{patient.dinner}}</h4>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <form action="{%url 'timesave'%}" method="post" class="timeform">
+                {%csrf_token%}
+                <div class="timeslot">
+                    <label>Breakfast Time:<input type="time" class="form-control" name="breakfast" id="bf"></label>
+                
+                    <label>Lunch Time:<input type="time" class="form-control" name="lunch" id="lunch"></label>
+                
+                    <label>Dinner Time:<input type="time" class="form-control" name="dinner" id=""></label>
+                </div>
+                <div>
+                    <input value="submit" style="margin-left: 80%; position:relative;top:-12px;"
+                        class="waves-effect waves-light btn btn-sm btn-primary-light" type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">Current Vitals</h4>
+            </div>
+            <div class="box-body">
+                <div class="flexbox bb-1 mb-15">
+                    <div>
+                        <p><span class="text-mute">Patient Name:</span> <strong>{{patient.fname}}</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="text-mute">Patient Id:</span> <strong>{{patient.p_id}}</strong></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row bb-1 pb-10">
+                            <div class="col-4">
+                                <img class="img-fluid float-start w-30 mt-10 me-10" src="{%static 'media/images/weight.png'%}"
+                                    alt="">
+                                <div>
+                                    <p class="mb-0"><small>Weight</small></p>
+                                    <h5 class="mb-0"><span>{{patient.weight}} kg</span></h5>
+                                </div>
+                            </div>
+                            <div class="col-4 bs-1 be-1">
+                                <img class="img-fluid float-start w-30 mt-10 me-10" src="{%static 'media/images/human.png'%}"
+                                    alt="">
+                                <div>
+                                    <p class="mb-0"><small>Height</small></p>
+                                    <h5 class=" mb-0"><span>{{patient.height}}</span></h5>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid float-start w-30 mt-10 me-10" src="{%static 'media/images/bmi.png'%}"
+                                    alt="">
+                                <div>
+                                    <p class="mb-0"><small>BMI</small></p>
+                                    <h5 class="mb-0"><span>{{patient.bmi}}</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body pt-0">
+                <p><small>Recorded on 25/05/2022</small></p>
+            </div>
+            <div class="box-body bg-primary">
+                <img src="{%static 'media/images/smoking.png'%}" alt="" class="float-start me-10">
+                <p>Smoking Status : Never Smoking</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!--medicine Here-->
+        <div class="box box-slided-up">
+            <div class="box-header with-border">
+                <h4 class="box-title">Add <strong>Medicines</strong></h4>
+                <ul class="box-controls pull-right">
+                    <li>
+                        <box-icon class="" name='x'></box-icon>
+                    </li>
+                    <li><a class="box-btn-slide" href="#">
+                            <box-icon name='chevron-down'></box-icon>
+                        </a></li>
+                    <li><a class="box-btn-fullscreen" href="#"></a></li>
+                </ul>
+            </div>
+        
+            <div class="box-body">
+                <div class="box-body">
+                   
+                <form class="boxed" method="post" name="medform" action="{%url 'medicine-update'%}">
+                    {%csrf_token%}
+                    <div class="med-icons">
+                        <input type="radio" id="pill" name="medicon" value="pill">
+                        <label for="pill">
+                            <img src="{%static 'media/img/pills.png'%}">
+                        </label>
+                        <input type="radio" id="tablet" name="medicon" value="tablet">
+                        <label for="tablet">
+                            <img src="{%static 'media/img/tablet.png'%}">
+                        </label>
+                
+                        <input type="radio" id="syringe" name="medicon" value="syringe">
+                        <label for="syringe">
+                            <img src="{%static 'media/img/syringe.png'%}">
+                        </label>
+                        <input type="radio" id="syrup" name="medicon" value="syrup">
+                        <label for="syrup">
+                            <img src="{%static 'media/img/syrup.png'%}">
+                        </label>
+                    </div>
+                    <div class="med-details">
+                        <div class="fields">
+                            <input type="text" value="" placeholder="Medcine Name" name="med-name">
+                        </div>
+                        <div class="fields">
+                            <div class="column">
+                                <div class="some">
+                                    <label for="dose">Dose</label>
+                                </div>
+                                <input type="text" name="dose">
+                                <span class="unit">mg</span>
+                            </div>
+                            <div class="column">
+                                <div class="some">
+                                    <label for="med_type">Type</label>
+                                </div>
+                                <select class="med" name="med_type" id="type">
+                                    <option id="pill2" value="pills">Pill</option>
+                                    <option id="tablet2" value="tablet">Tablet</option>
+                                    <option id="syringe2" value="syringe">Syringe</option>
+                                    <option id="syrup2" value="syrup">Syrup</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="column">
+                                <div class="some">
+                                    <label for="intake">Intake</label>
+                                </div>
+                                <select class="med" name="intake">
+                                    <option value="BEFORE FOOD">BEFORE FOOD</option>
+                                    <option value="AFTER FOOD">AFTER FOOD</option>
+                                </select>
+                            </div>
+                            <div class="column">
+                                <div class="some">
+                                    <label for="slot">slot</label>
+                                </div>
+                                <select class="med" name="slot" id="slot">
+                                    <option value="BREAK FAST">BREAK FAST</option>
+                                    <option value="LUNCH">LUNCH</option>
+                                    <option value="DINNER">DINNER</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fields capsules">
+                            <div class="column">
+                                <span>No of Capsules:</span>
+                                <input type="number" name="caps_no" id="caps">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <br><br>
+                    <input type="submit" class="med-sub" value="SUBMIT">
+                </form>
+                <script>
+                    const icons = document.querySelectorAll(".med-icons input");
+                    const unit = document.querySelector(".unit");
+                    icons.forEach(element => {
+                        element.addEventListener('change', (e) => {
+                            let t_val = e.target.value;
+                            if (t_val == 'pill' || t_val == 'tablet')
+                                unit.innerText = 'mg'
+                            else
+                                unit.innerText = 'ml'
+                            let tid = '#' + t_val + '2';
+                            let type = document.querySelector(tid);
+                            type.selected = true;
+                        })
+                    });
+                </script>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">Medicine Reminders</h4>
+            </div>
+            <div class="medshow flex-row flex-nowrap">
+                {%for prescription  in daily_pres%}
+                
+                <div class="prescription box">
+                    <div class="box-body">
+                        <h5 class="">{{prescription.medicine_date}}</h5>
+                        <span class="badge badge-secondary"><ion-icon name="time" style="margin-bottom: -1px; margin-right: 2px;"></ion-icon>{{prescription.prescription.send_on}}</span>
+                        <span class="badge {{prescription.prescription.med_class}}">{{prescription.prescription.med_time}}</span>
+                        {%for medicine in prescription.prescription.medicines.all%}
+                        <div class="">
+                            <div class="row">
+                                <div class="col1">
+                                    {%if medicine.medicine_type == "TABLET"%}
+                                    <img src="{%static 'media/img/tablet.png'%}" alt="">
+                                    {%elif medicine.medicine_type == "PILLS"%}
+                                    <img src="{%static 'media/img/pills.png'%}" alt="">
+                                    {%elif medicine.medicine_type == "SYRUP"%}
+                                    <img src="{%static 'media/img/syrup.png'%}" alt="">
+                                    {%elif medicine.medicine_type == "SYRINGE"%}
+                                    <img src="{%static 'media/img/syringe.png'%}" alt="">
+                                    {%endif%}
+                                </div>
+                                <div class="col dets">
+                                    <h3>{{medicine.medicine_name}}</h3>
+                                    <p class="meds">{{medicine.med_unit}}</p>
+                                    <p>{{prescription.prescription.med_time}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        {%endfor%}
+                        <!--<div class="">
+                            <div class="row">
+                                <div class="col1">
+                                    <img src="{%static 'media/img/pills.png'%}" alt="">
+                                </div>
+                                <div class="col dets">
+                                    <h3>Diuretics</h3>
+                                    <p class="meds">250mg, 1 pill</p>
+                                    <p>After Breakfast</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>-->
+                        <div class="medbtn">
+                            <button onclick="myreminder()"><ion-icon name="close" ></ion-icon> Skip</button>
+                            <button onclick="location.href='{{prescription.get_url}}';"><ion-icon name="checkmark"></ion-icon> Done </button>
+                        </div>
+                    </div>
+                    <!--Pattern-->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill="#f3f4f5" fill-opacity="0.2"
+                        d="M0,0L21.8,10.7C43.6,21,87,43,131,53.3C174.5,64,218,64,262,58.7C305.5,53,349,43,393,69.3C436.4,96,480,160,524,192C567.3,224,611,224,655,197.3C698.2,171,742,117,785,122.7C829.1,128,873,192,916,224C960,256,1004,256,1047,250.7C1090.9,245,1135,235,1178,213.3C1221.8,192,1265,160,1309,170.7C1352.7,181,1396,235,1418,261.3L1440,288L1440,320L1418.2,320C1396.4,320,1353,320,1309,320C1265.5,320,1222,320,1178,320C1134.5,320,1091,320,1047,320C1003.6,320,960,320,916,320C872.7,320,829,320,785,320C741.8,320,698,320,655,320C610.9,320,567,320,524,320C480,320,436,320,393,320C349.1,320,305,320,262,320C218.2,320,175,320,131,320C87.3,320,44,320,22,320L0,320Z">
+                    </path>
+                    <path fill="#f3f4f5" fill-opacity="0.1"
+                        d="M0,192L34.3,197.3C68.6,203,137,213,206,224C274.3,235,343,245,411,234.7C480,224,549,192,617,170.7C685.7,149,754,139,823,117.3C891.4,96,960,64,1029,53.3C1097.1,43,1166,53,1234,48C1302.9,43,1371,21,1406,10.7L1440,0L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z">
+                    </path>
+                    
+                </svg>
+                
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row basics">
+            <div class="col-md-6">
+                <div class="box blood row">
+                    <div class="col"><img src="{%static 'media/img/blood.png'%}" alt=""></div>
+                    <div class="col">
+                        <h3>{{patient.blood_grp}}</h3>
+                        <span class="btext">Blood Group</span>
+                    </div>
+                </div>
+                <div class="box foodt">
+                    
+                    <p>Breakfast Time:</p>
+                    <p>Lunch Time:</p>
+                    <p>Dinner Time:</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box weight">
+                    <h4>{{patient.weight}} kg<span class="wtext">weight</span></h4>
+                    <span class="currentw">+10kg</span>
+                    {%include 'weight.html'%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%for checkup in checkups%}
+<!--Model Popup Area-->
+<!-- result modal content -->
+<div class="modal fade" id="{{checkup.checkup_id}}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="result-popup">Checkup - Results</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-between">
+                    <div class="col-md-7 col-12">
+                        <h4>Test Name - {{checkup.get_checkup_type}}</h4>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <h4 class="text-end">Checkup Id : {{checkup.checkup_id}}</h4>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="bg-secondary">
+                            <tr>
+                                <th scope="col">Parameter</th>
+                                <th scope="col">Result</th>
+                                <th scope="col">Range</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for key,val in checkup.get_checkup_details.items%}
+                            {%if key == 'result' or key == 'results'%}
+                            <tr>
+                                <th>{{key}}</th>
+                                <th>{{val}}</th>
+                            </tr>
+                            {%else%}
+                            <tr>
+                                <td>{{key}}</td>
+                                <td>{{val}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            {%endif%}
+                            {%endfor%}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="comment">
+                    <p><span class="fw-600">Remarks:</span> : <span class="comment-here text-mute">Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. </span></p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th colspan="2" class="b-0">Test By</th>
+                                <th colspan="2" class="b-0">Signed By</th>
+                            </tr>
+                            <tr class="bg-secondary">
+                                <td>{{checkup.checkup_user}}</td>
+                                <td>Time : {{checkup.checkup_date}}2</td>
+                                <td>{{checkup.verified_by}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-right" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info pull-right">Print</button>
+                <button type="button" class="btn btn-success pull-right" onclick="location.href='{{checkup.get_checkup_link}}'">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{%endfor%}
+<!-- /.modal -->
+<!-- Modal -->
+<div class="modalrem">
+    
+</div>
+<!-- /.modal -->
+<script>
+    function fixed() {
+        console.log("have");
+        Push.create("hello world", {
+            body: "How's it hangin'?\nhiii",
+            icon: "{%static 'media/images/HEALTHICA.png'%}",
+            onClick: function () {
+                window.focus();
+                this.close();
+            }
+        });
+    }
+        function myreminder(){
+            $("#modal-fill").modal('toggle'); //see here usage
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"> </script>
+<script src="{%static 'js/chart.js'%}"></script>
+<script>
+    if("{{patient.breakfast}}"!="None"){
+        document.querySelector('.timeform').style.display="none";
+        //console.log("{{patient.breakfast}}");
+    }
+    else{
+        document.querySelector('.timedisplay').style.display = "none";
+    }
+    const edit=document.querySelector(".edit");
+    edit.addEventListener('click',(e)=>{
+         document.querySelector('.timedisplay').style.display = "none";
+         document.querySelector('.timeform').style.display = "block";
+    })
+</script>
+<script>get_data([67, 72, 68, 67, 67.8, 71])</script>
+
+{%endblock%}

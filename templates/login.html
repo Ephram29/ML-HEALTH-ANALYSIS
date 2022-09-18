@@ -28,7 +28,7 @@
             </div>
             <div class="form-inner">
                <form action="{%url 'login'%}" method="post" class="login">
-                  {%csrf_token%}
+                  {% csrf_token %}
                   <div class="field">
                      <input type="text" placeholder="Username" name="username" required>
                   </div>

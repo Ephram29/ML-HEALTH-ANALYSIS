@@ -73,17 +73,9 @@
             </div>
         </div>
     </div>
-    <!--Stylesheet-->
-    
-    <script src="{%static 'js/toast.js'%}"></script>
-    {%if messages%}
-    {%for message in messages%}
-    <script>showToast('{{message.tags}}', '{{message}}');</script>
-    {%endfor%}
-    {%endif%}
     <script>
         const DoctorText = document.querySelector(".title-text .Doctor");
-        const wrapper=document.querySelector(".wrapper1");
+        const wrapper = document.querySelector(".wrapper1");
         const DoctorForm = document.querySelector("form.Doctor");
         const DoctorBtn = document.querySelector("label.Doctor");
         const PatientBtn = document.querySelector("label.Patient");
@@ -91,7 +83,7 @@
         PatientBtn.onclick = (() => {
             DoctorForm.style.marginLeft = "-50%";
             DoctorText.style.marginLeft = "-50%";
-            wrapper.style.maxHeight="900px";
+            wrapper.style.maxHeight = "900px";
         });
         DoctorBtn.onclick = (() => {
             DoctorForm.style.marginLeft = "0%";
@@ -103,6 +95,15 @@
             return false;
         });
     </script>
+    <!--Stylesheet-->
+    
+    <script src="{%static 'js/toast.js'%}"></script>
+    {%if messages%}
+    {%for message in messages%}
+    <script>showToast('{{message.tags}}', '{{message}}');</script>
+    {%endfor%}
+    {%endif%}
+    
 </body>
 
 </html>

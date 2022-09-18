@@ -1,0 +1,178 @@
+<form>
+    <div class="medname">
+
+        <div class="medimgs">
+            <label for="pill">
+                <input type="radio" name="pill" id="Pillimg">
+                <img src="https://cdn-icons-png.flaticon.com/128/595/595611.png" class="ra">
+            </label>
+
+            <label for="Tabimg">
+                <input type="radio" name="Tablet" id="Tabimg">
+                <img src="https://cdn-icons-png.flaticon.com/128/807/807165.png" id="Pillimg" class="ra">
+            </label>
+
+            <label for="Vaccimg">
+                <input type="radio" name="Vaccine" id="Vaccimg">
+                <img src="https://cdn-icons-png.flaticon.com/128/407/407492.png" class="ra">
+            </label>
+
+
+            <label for="Syrimg">
+                <input type="radio" name="Syrup" id="Syrimg">
+                <img src="https://cdn-icons-png.flaticon.com/128/3209/3209036.png" class="ra">
+            </label>
+        </div>
+
+
+
+        <input type="text" id="mname" placeholder="Medicine name">
+        <br>
+        <fieldset id="dose">
+            <legend>Dosage</legend>
+            <input type="text" placeholder="mg">
+        </fieldset>
+
+        <fieldset id="Medtype">
+            <legend>Medicine type</legend>
+            <select name="pill" id="pill">
+                <option value="Pill">Pill</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Vaccine">Vaccine</option>
+                <option value="Syrup">Syrup</option>
+            </select>
+        </fieldset> <br>
+
+        <fieldset id="timeslot">
+            <legend>Time Slot</legend>
+            <select name="timeslot" id="timeslots"><br>
+                <option value="Before Food">Before Food</option>
+                <option value="After Food">After Food</option>
+            </select>
+
+            <input type="time" name="" id="time">
+        </fieldset><br>
+
+        <input type="submit" id="addmed" value="Add Medicine">
+
+
+    </div>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .medname {
+            width: 400px;
+        }
+
+        #mname {
+            height: 70px;
+            width: 600px;
+            position: relative;
+            top: 100px;
+        }
+
+        #dose {
+
+            width: 20px;
+            border-radius: 14px;
+            position: relative;
+            top: 100px;
+        }
+
+        #pill {
+            width: 150px;
+
+        }
+
+        #Medtype {
+            width: 150px;
+            border-radius: 14px;
+            position: relative;
+            top: 43px;
+            left: 250px;
+
+        }
+
+
+        #timeslot {
+            width: 400px;
+            border-radius: 14px;
+            position: relative;
+            top: 100px;
+
+
+        }
+
+        #timeslots {
+            width: 150px;
+
+        }
+
+        #time {
+            position: relative;
+            top: 0px;
+            left: 40px;
+        }
+
+        #addmed {
+            background-color: #3759d1;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 14px;
+            position: relative;
+            top: 100px;
+
+
+        }
+
+
+
+
+        .medimgs {
+            position: relative;
+            display: flex;
+        }
+
+        input[type="radio"] {
+            -webkit-appearance: none;
+        }
+
+        label {
+            height: 100px;
+            width: 240px;
+            border: 6px solid #18f98d;
+            margin: auto;
+            border-radius: 10px;
+            color: #18f98d;
+            transition: 0.5s;
+        }
+
+        .ra {
+            font-size: 80px;
+            position: absolute;
+            width: 80px;
+            top: 10%;
+            left: 10%;
+            transform: translate(-50%, -80%);
+        }
+
+        .medimgs label {
+            position: relative;
+        }
+    </style>
+
+</form>

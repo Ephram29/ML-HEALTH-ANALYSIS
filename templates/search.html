@@ -14,9 +14,10 @@
 
   <body>
     {%include 'navbar.html'%}
+    <div class="spacer"></div>
     <div class="wrapper">
       <div class="search-input">
-        <input type="text" placeholder="Type to search..">
+        <input type="text" placeholder="Search for your symptoms..">
         <div class="autocom-box">
           <li>Itching</li>
           <li>Skin rash</li>
@@ -25,16 +26,17 @@
         <div class="icon"><i class="fas fa-search"></i></div>
         
       </div>
+      <div class="add-btn"><button class="add">Add to Chat</button></div>
       <div class="show">
         <iframe src="" style="border:0px #ffffff none;" name="page"  frameborder="1" marginheight="0px"
-          marginwidth="0px" height="400px" width="800px" allowfullscreen class="frame"></iframe>
+          marginwidth="0px" height="400px" width="50%" allowfullscreen class="frame"></iframe>
         <a target="page" href=""></a>
-      
       </div>
     </div>
     
     {%block bot%}
     {%endblock%}
+    
     <script src="{%static 'js/suggestions.js'%}"></script>
     <script src="{%static 'js/search.js'%}"></script>
     <script type="text/javascript" src="{% static 'js/app.js' %}"></script>

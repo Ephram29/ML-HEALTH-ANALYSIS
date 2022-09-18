@@ -11,11 +11,11 @@ body {
 }
 
 *, html {
-    --primaryGradient: linear-gradient(93.12deg, #581B98 0.52%, #9C1DE7 100%);
-    --secondaryGradient: linear-gradient(268.91deg, #581B98 -2.14%, #9C1DE7 99.69%);
+    --primaryGradient: linear-gradient(93.12deg, #0A19FE 0.52%, #4179fb 100%);
+    --secondaryGradient: linear-gradient(268.91deg, #0A19FE -2.14%, #4179fb 99.69%);
     --primaryBoxShadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
     --secondaryBoxShadow: 0px -10px 15px rgba(0, 0, 0, 0.1);
-    --primary: #581B98;
+    --primary: #0A19FE;
 }
 
 /* CHATBOX
@@ -23,7 +23,7 @@ body {
 .chatbox {
     position: absolute;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
 }
 
 /* CONTENT IS CLOSE */
@@ -32,7 +32,7 @@ body {
     flex-direction: column;
     background: #eee;
     width: 300px;
-    height: 350px;
+    height: 320px;
     z-index: -123456;
     opacity: 0;
     transition: all .5s ease-in-out;
@@ -40,15 +40,22 @@ body {
 
 /* CONTENT ISOPEN */
 .chatbox--active {
-    transform: translateY(-40px);
+    transform: translateY(-20px);
     z-index: 123456;
     opacity: 1;
 
 }
 
+.symp-content{
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
+.symp-content-active{
+    opacity: 1 !important;
+}
 /* BUTTON */
 .chatbox__button {
-    text-align: left;
+    text-align: right;
 }
 
 .send__button {
@@ -192,7 +199,8 @@ body {
     outline: none;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 50px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
@@ -272,4 +280,47 @@ body {
     .chatbox__support {
         width: 100%;
     }
+}
+.head{
+    margin-left: 23px;
+}
+.symp-header{
+    font-weight: 600;
+    font-size: 54px;
+   
+    margin-top: 120px;
+}
+.symp-p{
+    color: #514d4d;
+    margin-top: 10px;
+    font-size: 20px;
+}
+.symp-btn,.add{
+    border: 0;
+    background-color: #0A19FE;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+.add-btn{
+    margin:10px 20px;
+    width: 50%;
+}
+.add{
+    position: relative;
+    left:77%;
+}
+.results{
+    height: 200px;
+    width: 96% !important;
+    position: absolute;
+    bottom: -200px;
+    background-color: white;
+    margin-top: 100px;
+    margin: 0 2% ;
+    border-radius: 20px;
+}
+.results h5{
+    color: #0A19FE;
+    padding: 10px 10px;
 }

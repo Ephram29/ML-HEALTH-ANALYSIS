@@ -3,7 +3,9 @@ class Chatbox{
         this.args={
             openButton: document.querySelector('.chatbox__button'),
             chatBox: document.querySelector('.chatbox__support'),
-            sendButton: document.querySelector('.send__button')   
+            sendButton: document.querySelector('.send__button'),
+            chatButton: document.querySelector('.symp-btn'),  
+             
         }
         this.state = false;
         this.messages = [];
@@ -11,8 +13,12 @@ class Chatbox{
     }
 
     display(){
-        const{openButton,chatBox,sendButton}=this.args;
-        openButton.addEventListener('click',()=>this.toggleState(chatBox))
+        const{openButton,chatBox,sendButton,chatButton}=this.args;
+        const arr = [openButton, chatButton]
+        arr.forEach(e => {
+            e.addEventListener('click', () => this.toggleState(chatBox));
+        });
+        
         sendButton.addEventListener('click', () => this.onSendButton(chatBox))
         const e_btn=chatBox.querySelector('input');
         e_btn.addEventListener("keypress",(event)=>{
@@ -28,15 +34,33 @@ class Chatbox{
 
     toggleState(chatbox){
         this.state=!this.state;
+        const sympContent= document.querySelectorAll('.symp-content');
+        const wrapper=document.querySelector('.wrapper');
         if(this.state)
+        {
             chatbox.classList.add('chatbox--active');
+            sympContent.forEach(e=>{
+                e.classList.remove('symp-content-active');
+                wrapper.style.display='block';
+            });
+            
+        }
+            
         else
+        {
             chatbox.classList.remove('chatbox--active');
+            wrapper.style.display = 'none';
+            sympContent.forEach(e => {
+                e.classList.add('symp-content-active');
+            });
+        }
     }
 
     onSendButton(chatbox){
         var textField=chatbox.querySelector('input');
         let msg=textField.value;
+        this.args.sendButton.disabled=true;
+        textField.value = '';
         if(msg==="")
          return;
         let msg1={name:"user",message:msg}
@@ -50,16 +74,16 @@ class Chatbox{
               },})
               .then(res=>res.json())
               .then(r=>{
-                  console.log(r);
                   let msg2={name:"sam",checkup_ID:r.checkup_ID,message:r.reply};
                   this.messages.push(msg2);
                   this.checkup_ID=r.checkup_ID;
-                  console.log(msg2);
                   this.updateChatText(chatbox)
-                  textField.value='';
+                  
+                  this.args.sendButton.disabled = false;
               }).catch((error)=>{
                   console.log('Error',error);
                   textField.value=''
+                  this.args.sendButton.disabled = false;
               });
 
     }

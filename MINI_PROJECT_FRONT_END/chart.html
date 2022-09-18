@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+.graph{
+
+position: relative;
+width:100%;
+padding:20%;
+display:grid;
+grid-template-columns:1fr 2fr;
+grid-gap:30px;
+min-height: 200px;
+
+
+}
+
+.graph.box{
+
+position: relative;
+background: #fff;
+padding: 20px;
+width:100% ;
+box-shadow:0 7px 25px rgba(0,0,0,0.08) ;
+border-radius: 20px;
+
+}
+
+@media(max-width:991px){
+
+.graph{
+grid-template-columns:1fr  ;
+height: auto;
+}
+
+
+}
+
+
+
+
+</style>
+<body>
+    
+
+<div class="graph">
+<h1> text</h1>
+<div class="box">
+<canvas id="myChart" width="" height=""></canvas>
+</div>
+<div class="box"></div>
+<canvas id="glucose" width="" height=""></canvas>
+</div>
+
+</body>
+<script src ="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"> </script>
+<script src="chart.js"></script>
+<script>get_data([67,72,68,67,67.8,71])</script>
+</html>
+

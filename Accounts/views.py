@@ -76,13 +76,13 @@ def form_view(request):
         doctor=None
         patient=None
         try:
-            doctor = Doctor.objects.get(doctor_id=D_id)
+            doctor = Doctor.objects.get(d_id=D_id)
             patient= Profile.objects.get(p_id=P_id)
         except (Doctor.DoesNotExist,Profile.DoesNotExist):
             pass
         if doctor==None and patient==None:
             break
-    initia_dataD={'doctor_id':D_id}
+    initia_dataD={'d_id':D_id}
     initia_dataP = {'p_id': P_id}
     context = {'pform': Patientform(
         initial=initia_dataP), 'dform': Doctorform(initial=initia_dataD)}
@@ -95,9 +95,10 @@ def Doctorregister(request):
         print(request.POST)
         D_id=request.POST.get("doctor_id",False)
         try:
-            doctor = Doctor.objects.get(doctor_id=D_id,user=request.user)
+            doctor = Doctor.objects.get(d_id=D_id,doctor=request.user)
         except Doctor.DoesNotExist:
-            doctor = Doctor(user=request.user, doctor_id=D_id).save()
+            doctor = Doctor(doctor=request.user, d_id=D_id)
+            doctor.save()
         form = Doctorform(request.POST,instance=doctor)
         if form.is_valid():
             user=form.save()

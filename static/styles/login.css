@@ -10,10 +10,10 @@ html,body{
   height: 100%;
   width: 100%;
   place-items: center;
-  background: -webkit-linear-gradient(left, #a445b2, #fa4299);
+  background: -webkit-linear-gradient(left, #7A87F8, #0A19FE);
 }
 ::selection{
-  background: #fa4299;
+  background: #0A19FE;
   color: #fff;
 }
 .wrapper{
@@ -141,7 +141,7 @@ form .field input:focus::placeholder{
 }
 .form-inner form .pass-link a,
 .form-inner form .signup-link a{
-  color: #fa4299;
+  color: #0A19FE;
   text-decoration: none;
 }
 .form-inner form .pass-link a:hover,

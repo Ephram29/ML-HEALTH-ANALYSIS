@@ -61,10 +61,12 @@ def predict_disease(affected_symps,final_symp):
     prediction = model.predict_proba([affected_symps])
     k = 10
     #diseases = list(set(Y['label_dis']))
+    #print("prediction=",prediction)
     diseases.sort()
     scores = [0.78213922,0.87945671,0.92473118,0.94793435,0.97792869]
     final_symp=set(final_symp)
     topk = prediction[0].argsort()[-k:][::-1]
+    #print("topk=",topk)
     print(f"\nTop {k} diseases predicted based on symptoms")
     topk_dict = {}
     # Show top 10 highly probable disease to the user.
@@ -109,7 +111,7 @@ def predict_diabetes(request):
     final_features = [np.array(float_features)]
     print(sc.transform(final_features))
     pred = diabetes_mod.predict( sc.transform(final_features) )
-    return render (request,"result.html",{'prediction':pred})
+    return render(request, "diabeticform.html", {'prediction': pred, 'age': request.user.profile.age}), pred
 
 
     

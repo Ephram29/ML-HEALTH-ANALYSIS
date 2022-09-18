@@ -1,0 +1,112 @@
+{%load static%}
+<!-- result modal content -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <!-- Vendors Style-->
+    <link rel="stylesheet" type="text/css" href="{%static 'styles/style1.css'%}">
+    <link rel="stylesheet" href="{%static 'styles/css/vendors_css.css'%}">
+    
+    <!-- Style-->
+    <link rel="stylesheet" href="{%static 'styles/dash.css'%}">
+    <link rel="stylesheet" href="{%static 'styles/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'styles/css/skin_color.css'%}">
+    <style>
+       body { min-height: 100vh; 
+    background: rgba(0, 0, 0, 0.3);}
+        .modal{
+            display: block;
+            position: relative;
+            overflow: scroll;
+            background: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal" id="{{checkup.checkup_id}}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="result-popup">Checkup - Results</h4>
+                    
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-between">
+                        <div class="col-md-7 col-12">
+                            <h4>Test Name - {{checkup.get_checkup_type}}</h4>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <h4 class="text-end">Checkup Id : {{checkup.checkup_id}}</h4>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="bg-secondary">
+                                <tr>
+                                    <th scope="col">Parameter</th>
+                                    <th scope="col">Result</th>
+                                    <th scope="col">Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for key,val in checkup.get_checkup_details.items%}
+                                {%if key == 'result' or key == 'results'%}
+                                <tr>
+                                    <th>{{key}}</th>
+                                    <th>{{val}}</th>
+                                </tr>
+                                {%else%}
+                                <tr>
+                                    <td>{{key}}</td>
+                                    <td>{{val}}</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                {%endif%}
+                                {%endfor%}
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="comment">
+                        <p><span class="fw-600">Remarks</span> : <span class="comment-here text-mute">Lorem ipsum dolor sit
+                                amet, consectetur adipisicing elit. </span></p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th colspan="2" class="b-0">Test By</th>
+                                    <th colspan="2" class="b-0">Signed By</th>
+                                </tr>
+                                <tr class="bg-secondary">
+                                    <td>{{checkup.checkup_user}}</td>
+                                    <td>{{checkup.checkup_date}}</td>
+                                    <td>{{checkup.verified_by}}</td>
+                                    <td>{{checkup.current}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-right" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info pull-right">Print</button>
+                    <button type="button" class="btn btn-success pull-right"
+                        onclick="location.href='{{checkup.get_checkup_link}}';">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</body>
+</html>
